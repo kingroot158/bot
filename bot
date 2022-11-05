@@ -1,0 +1,33 @@
+<?php
+echo "Wallet List ex (list.txt) : ";
+$xyz = trim(fgets(STDIN));
+foreach (explode("\n", str_replace("\r", "", file_get_contents($xyz))) as $key => $wallet) {
+$curl = file_get_contents("https://lunacia.skymavis.com/game-api/clients/$wallet/items/1");
+$js = json_decode($curl);
+$clientid = $js->client_id;
+$itemid = $js->item_id;
+$total = $js->total;
+$signature = $js->blockchain_related->signature->signature;
+$amount = $js->blockchain_related->signature->amount;
+$timestamp = $js->blockchain_related->signature->timestamp;
+$balance = $js->blockchain_related->balance;
+$checkpoint = $js->blockchain_related->checkpoint;
+$claimable = $js->claimable_total;
+$lastclaim = $js->last_claimed_item_at;
+$roninaddress = $js->ronin_address;
+
+$waktu = date("m/d/Y H:i:s", $timestamp); 
+echo "Client id : ".$clientid.PHP_EOL;
+echo "Item id : ".$itemid.PHP_EOL;
+echo "Total : ".$total.PHP_EOL;
+echo "Signature : ".$signature.PHP_EOL;
+echo "Amount : ".$amount.PHP_EOL;
+echo "Timestamp : ".$waktu.PHP_EOL;
+echo "Balance : ".$balance.PHP_EOL;
+echo "Checkpoint : ".$checkpoint.PHP_EOL;
+echo "Claimable : ".$claimable.PHP_EOL;
+echo "Last claim : ".$lastclaim.PHP_EOL;
+echo "Ronin address : ".$roninaddress.PHP_EOL;
+//print_r($js);
+}
+?>
